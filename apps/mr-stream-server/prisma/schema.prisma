@@ -1,0 +1,57 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Subscription {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  plan      String?
+  payment   Float?
+}
+
+model Content {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  contentId String?
+  amount    Float?
+}
+
+model Donate {
+  id         String   @id @default(cuid())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  streamerId String?
+  amount     Float?
+}
+
+model Stream {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  gameTitle String?
+  streamKey String?
+  streamUrl String?
+}
+
+model User {
+  id               String   @id @default(cuid())
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  firstName        String?
+  lastName         String?
+  username         String   @unique
+  email            String?  @unique
+  password         String
+  roles            Json
+  walletId         String?
+  subscription     String?
+  purchasedContent Json?
+  currentStream    String?
+}
